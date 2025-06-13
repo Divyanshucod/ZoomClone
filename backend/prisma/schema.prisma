@@ -21,8 +21,7 @@ model User {
   meethings Meeting[]
 }
 model Meeting {
-   id Int @id @default(autoincrement())
-   meethingId String @unique
+   meetingId String @id
    author User @relation(fields: [hoster],references: [id])
    hoster Int
    members Member[]
@@ -32,6 +31,6 @@ model Member {
    id Int @id @default(autoincrement())
    memberId String @unique
    memberName String
-   meething Meeting @relation(fields: [meethingId],references: [id])
-   meethingId Int
+   meeting Meeting @relation(fields: [meetingId],references: [meetingId])
+   meetingId String
 }

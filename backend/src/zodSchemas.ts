@@ -10,3 +10,10 @@ export const userSignInSchema = zod.object({
     email:zod.string().email(),
     password:zod.string().min(6),
 })
+
+export const meetingCreationSchema = zod.object({
+    meetingId:zod.string(),
+    username:zod.string(),
+    memberId:zod.string()
+})
+export type meetingCreation = zod.infer<typeof meetingCreationSchema>
