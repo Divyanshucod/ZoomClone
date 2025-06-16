@@ -31,10 +31,24 @@ connectionRouter.get('/create-meeting',authMiddleware,async (req:Request,res:Res
           return;
      }
 })
+connectionRouter.get('/validateMeeting/:meetingId',authMiddleware,async (req:Request,res:Response)=>{
+     const meetingId = req.params.meetingId;
+     const meeting = await prisma.meeting.findUnique({
+          where:{
+               meetingId:meetingId
+          }
+     })
+     if(!meeting){
+          res.status(401).json({message:'this meeting is not exists!'})
+          return;
+     }
 
+     res.status(200).json({message:"Join the meet!"})
+})
 connectionRouter.post('/join-meeting',authMiddleware,async (req:Request,res:Response)=>{
      // creating unique id for meething and adding putting in database
      const {success} = meetingCreationSchema.safeParse(req.body);
+     
      if(!success){
           res.status(403).json({message:'fields are required'});
           return;
@@ -42,16 +56,6 @@ connectionRouter.post('/join-meeting',authMiddleware,async (req:Request,res:Resp
      const joinMeetingInfo = req.body as meetingCreation
      
      try {
-          // check meeting exists
-          const meeting = await prisma.meeting.findUnique({
-               where:{
-                    meetingId:joinMeetingInfo.meetingId
-               }
-          })
-          if(!meeting){
-               res.status(401).json({message:'this meeting is not exists!'})
-               return;
-          }
           // check user is already there
           const member = await prisma.member.findUnique({
                where:{

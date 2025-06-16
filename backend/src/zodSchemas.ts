@@ -12,7 +12,7 @@ export const userSignInSchema = zod.object({
 })
 
 export const meetingCreationSchema = zod.object({
-    meetingId:zod.string(),
+    meetingId:zod.string().min(3),
     username:zod.string(),
     memberId:zod.string()
 })

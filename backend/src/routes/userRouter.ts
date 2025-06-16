@@ -67,7 +67,7 @@ userRouter.post('/signin',async (req:express.Request,res:express.Response):Promi
       }
       //create jwt token 
       const token = jwt.sign({id:user?.id},process.env.JWT_SECRET!);
-       res.status(200).json({ message: "signin successfull" ,token});
+       res.status(200).json({ message: "signin successfull" ,token,username:user.username});
        return
     } catch (error) {
          res.status(500).json({

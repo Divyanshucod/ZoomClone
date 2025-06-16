@@ -17,6 +17,7 @@ const SignIn = () => {
         const value = await axios.post('http://localhost:3000/api/v1/user/signin',SignInInfo);
         alert(value.data.message);
         localStorage.setItem('AuthToken',value.data.token);
+        localStorage.setItem('username',value.data.username)
      } catch (error:any) {
         alert(error.response.data.message)
      }  
